@@ -1,0 +1,5 @@
+MONGO_URI=mongodb+srv://hadi:xxxxxx@cluster0.d343x.mongodb.net/testToken?retryWrites=true&w=majority
+ACCESS_TOKEN_SECRET = accesstokensecret123asdd
+REFRESH_TOKEN_SECRET = refreshtokensecret343kjkj
+NODE_ENV=development
+PORT=5000
