@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -30,7 +31,7 @@ func AuthenticateToken() gin.HandlerFunc {
 		// Parse dan verifikasi token
 		claims := &Claims{}
 		token, err := jwt.ParseWithClaims(tokenStr, claims, func(t *jwt.Token) (interface{}, error) {
-			return JwtKey(), nil
+			return []byte(os.Getenv("ACCESS_TOKEN_SECRET")), nil
 		})
 
 		if err != nil || !token.Valid {

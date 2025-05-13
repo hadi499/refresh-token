@@ -3,9 +3,9 @@ package controllers
 import (
 	"go-refresh-token/database"
 	"go-refresh-token/middleware"
-
 	"go-refresh-token/models"
 	"net/http"
+	"os"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -182,7 +182,7 @@ func MyRefreshToken(c *gin.Context) {
 	// Parse dan verifikasi token
 	claims := &middleware.Claims{}
 	token, err := jwt.ParseWithClaims(reqBody.Token, claims, func(t *jwt.Token) (interface{}, error) {
-		return middleware.JwtKey(), nil // gunakan fungsi helper agar tidak expose variabel langsung
+		return []byte(os.Getenv("REFRESH_TOKEN_SECRET")), nil // gunakan fungsi helper agar tidak expose variabel langsung
 	})
 
 	if err != nil || !token.Valid {

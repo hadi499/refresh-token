@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -32,7 +33,7 @@ func GenerateAccessToken(userId string, username string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Buat token string
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_SECRET")))
 	if err != nil {
 		return "", err
 	}
@@ -55,7 +56,7 @@ func GenerateRefreshToken(userId string, username string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Buat token string
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString([]byte(os.Getenv("REFRESH_TOKEN_SECRET")))
 	if err != nil {
 		return "", err
 	}

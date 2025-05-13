@@ -1,12 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"go-refresh-token/controllers"
 	"go-refresh-token/database"
 	"go-refresh-token/middleware"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -33,6 +37,20 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func main() {
 	database.ConnectDatabase()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	secret := os.Getenv("ACCESS_TOKEN_SECRET")
+	refresh := os.Getenv("REFRESH_TOKEN_SECRET")
+	if secret == "" {
+		log.Fatal("ACCESS_TOKEN_SECRET is not set")
+	}
+
+	fmt.Println("Secret token loaded:", secret)
+	fmt.Println("Refresh token loaded:", refresh)
+
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 	r.POST("/api/users/register", controllers.Register)
