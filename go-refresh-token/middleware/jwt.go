@@ -7,9 +7,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-// Secret key untuk JWT
-var jwtKey = []byte("my_secret_key")
-
 // Claims adalah struktur untuk menyimpan payload token
 type Claims struct {
 	UserId   string `json:"user_id"`
@@ -62,8 +59,4 @@ func GenerateRefreshToken(userId string, username string) (string, error) {
 	}
 
 	return tokenString, nil
-}
-
-func JwtKey() []byte {
-	return jwtKey
 }
